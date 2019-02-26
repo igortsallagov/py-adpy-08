@@ -51,7 +51,7 @@ def check_if_exists(course_id):
                 select exists (select true
                 from course where id = %s);
                     """, (course_id,))
-            result = cur.fetchall()[0][0]
+            result = cur.fetchone()[0]
     return result
 
 
@@ -118,8 +118,8 @@ def get_student_id(name):
 if __name__ == '__main__':
     add_student({'name': 'Игорь Сергеев', 'gpa': 3.9, 'birth': '1987-01-13'})
     add_course('Экономическая теория', 'Философия', 'Логика')
-    add_students(10, {'name': 'Иван Виноградов', 'gpa': 3.6, 'birth': '1986-11-09'},
+    print(add_students(10, {'name': 'Иван Виноградов', 'gpa': 3.6, 'birth': '1986-11-09'},
                     {'name': 'Наталья Степанова', 'gpa': 4.0, 'birth': '1984-06-15'},
-                    {'name': 'Анастасия Глаголева', 'gpa': 1.0, 'birth': '1985-05-31'})
+                    {'name': 'Анастасия Глаголева', 'gpa': 1.0, 'birth': '1985-05-31'}))
     print(get_students(11))
     print(get_student(58))
