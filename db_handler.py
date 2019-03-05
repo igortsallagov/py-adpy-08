@@ -68,7 +68,7 @@ def add_student(student):
 
 def add_students(course_id, *students):
     if check_if_exists(course_id) is False:
-        result = False
+        pass
     else:
         for student in students:
             id_value = add_student(student)
@@ -78,8 +78,6 @@ def add_students(course_id, *students):
                         insert into student_course (student_id, course_id)
                         values (%s, %s);
                             """, (id_value, course_id))
-        result = True
-    return result
 
 
 def get_students(course_id):
@@ -108,8 +106,8 @@ def get_student(student_id):
 if __name__ == '__main__':
     add_student({'name': 'Игорь Сергеев', 'gpa': 3.9, 'birth': '1987-01-13'})
     add_course('Экономическая теория', 'Философия', 'Логика')
-    print(add_students(10, {'name': 'Иван Виноградов', 'gpa': 3.6, 'birth': '1986-11-09'},
+    add_students(14, {'name': 'Иван Виноградов', 'gpa': 3.6, 'birth': '1986-11-09'},
                     {'name': 'Наталья Степанова', 'gpa': 4.0, 'birth': '1984-06-15'},
-                    {'name': 'Анастасия Глаголева', 'gpa': 1.0, 'birth': '1985-05-31'}))
+                    {'name': 'Анастасия Глаголева', 'gpa': 1.0, 'birth': '1985-05-31'})
     print(get_students(14))
     print(get_student(50))
