@@ -52,7 +52,7 @@ def check_if_exists(course_id):
                 from course where id = %s);
                     """, (course_id,))
             result = cur.fetchone()[0]
-    return result
+        return result
 
 
 def add_student(student):
@@ -63,12 +63,12 @@ def add_student(student):
                 returning id;
                     """, (student['name'], student['gpa'], student['birth']))
             result = cur.fetchone()[0]
-    return result
+        return result
 
 
 def add_students(course_id, *students):
     if check_if_exists(course_id) is False:
-        result = f'Курс с ID {course_id} не существует.'
+        result = False
     else:
         for student in students:
             id_value = add_student(student)
@@ -92,7 +92,7 @@ def get_students(course_id):
                 where sc.course_id = %s;
                     """, (course_id,))
             result = cur.fetchall()
-    return result
+        return result
 
 
 def get_student(student_id):
@@ -102,17 +102,7 @@ def get_student(student_id):
                 select * from student where id = %s
                     """, (student_id,))
             result = cur.fetchone()
-    return result
-
-
-def get_student_id(name):
-    with pg.connect(dbname=DB_NAME, user=DB_USER) as conn:
-        with conn.cursor() as cur:
-            cur.execute("""
-                select id from student where name = %s;
-                    """, (name,))
-            result = cur.fetchall()
-    return result
+        return result
 
 
 if __name__ == '__main__':
@@ -121,5 +111,5 @@ if __name__ == '__main__':
     print(add_students(10, {'name': 'Иван Виноградов', 'gpa': 3.6, 'birth': '1986-11-09'},
                     {'name': 'Наталья Степанова', 'gpa': 4.0, 'birth': '1984-06-15'},
                     {'name': 'Анастасия Глаголева', 'gpa': 1.0, 'birth': '1985-05-31'}))
-    print(get_students(11))
-    print(get_student(58))
+    print(get_students(14))
+    print(get_student(50))
